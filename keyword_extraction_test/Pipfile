@@ -4,13 +4,16 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-jupyter = "*"
+beautifulsoup4 = "*"
+lxml = "*"
+requests = "*"
 numpy = "*"
 pandas = "*"
 scikit-learn = "*"
-matplotlib = "*"
-seaborn = "*"
-umap-learn = "*"
+langchain = "*"
+konlpy = "*"
+nltk = "*"
+tqdm = "*"
 
 [dev-packages]
 
