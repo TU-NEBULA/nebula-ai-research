@@ -15,6 +15,10 @@ konlpy = "*"
 nltk = "*"
 tqdm = "*"
 jupyter = "*"
+networkx = "*"
+transformers = "*"
+torch = "*"
+ace-tools = "*"
 
 [dev-packages]
 
