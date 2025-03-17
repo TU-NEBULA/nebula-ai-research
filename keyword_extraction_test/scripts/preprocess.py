@@ -21,25 +21,23 @@ def fetch_html(url):
 
 def extract_main_text(html: str) -> str:
     """
-    BeautifulSoup을 사용하여 HTML 본문 텍스트를 추출하는 함수.
+    BeautifulSoup으로 HTML을 파싱하여 본문 텍스트를 최대한 깔끔하게 추출.
+    <div>, <article>, <section> 태그 기준으로 텍스트를 모음.
     """
-    soup = BeautifulSoup(html, "lxml")
+    soup = BeautifulSoup(html, "html.parser")
 
-    # <script>, <style> 태그 제거
-    for tag in soup(["script", "style"]):
-        tag.decompose()
+    content_tags = soup.find_all(['div', 'article', 'section'])
+    texts = []
 
-    # Velog 본문이 있는 태그 탐색
-    content_tag = soup.find("div", class_="markdown-body")
-    
-    if content_tag:
-        main_text = content_tag.get_text(separator=" ", strip=True)
-    else:
-        main_text = ""
+    for tag in content_tags:
+        text = tag.get_text(separator=" ", strip=True)
+        if text:
+            texts.append(text)
 
-    # 불필요한 공백 및 특수 문자 정리
-    main_text = re.sub(r"[^\w\s]", "", main_text)  # 특수 문자 제거
-    main_text = re.sub(r"\s+", " ", main_text).strip()  # 중복 공백 제거
+    main_text = "\n".join(texts)
+
+    main_text = re.sub(r'[^\w\s]', '', main_text)
+    main_text = re.sub(r'\s+', ' ', main_text).strip()
 
     return main_text
 
@@ -90,3 +88,8 @@ def process_velog_articles():
 # 실행 예제
 if __name__ == "__main__":
     process_velog_articles()
+
+    # TODO
+    # main text 추출 로직 수정 필요
+    # velog 이외 다른 블로그 확인 필요
+    # 블로그 이외 다른 사이트 확인 필요
